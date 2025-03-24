@@ -14,7 +14,6 @@ data "external" "tfe_token" {
 resource "tfe_organization_membership" "admin_user" {
   organization = "test-org"
   email        = "tarun.bansal@hashicorp.com"
-  status       = "confirmed"
 }
 
 # Generate a random password for the admin user
@@ -28,9 +27,10 @@ resource "tfe_team" "admin_team" {
   organization = "your-org-name"
 }
 
-resource "tfe_team_membership" "add_admin_to_team" {
-  team_id  = tfe_team.admin_team.id
-  user_id  = tfe_organization_membership.admin_user.id
+resource "tfe_team_organization_member" "add_admin_to_team" {
+  team_id        = tfe_team.admin_team.id
+  organization   = "test-org"
+  email          = tfe_organization_membership.admin_user.email
 }
 
 # Output the generated password securely
