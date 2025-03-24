@@ -2,11 +2,10 @@ provider "tfe" {
   token = data.external.tfe_token.result["token"]  # Get token dynamically
 }
 
-# Fetch TFE token from the cluster
 data "external" "tfe_token" {
   program = ["sh", "-c", <<EOT
-    POD_NAME=$(kubectl get pods -n tfe -l app=terraform-enterprise -o jsonpath='{.items[0].metadata.name}')
-    kubectl exec -n terraform-enterprise -it $POD_NAME -- tfectl admin token | tr -d '\r\n'
+    TOKEN=$(kubectl exec -it $(kubectl get pods -n tfe -l app=terraform-enterprise -o jsonpath='{.items[0].metadata.name}') -- tfectl admin token)
+    echo "{\"token\": \"${TOKEN}\"}"
   EOT
   ]
 }
