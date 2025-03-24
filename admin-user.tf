@@ -29,6 +29,7 @@ resource "tfe_team" "admin_team" {
 
 resource "tfe_team_organization_member" "add_admin_to_team" {
   team_id        = tfe_team.admin_team.id
+  organization_membership_id = tfe_organization_membership.admin_user.id
   #organization   = "test-org"
   #email          = tfe_organization_membership.admin_user.email
 }
