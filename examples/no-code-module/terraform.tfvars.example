@@ -1,0 +1,4 @@
+tfe_release_tag           = "v202411-1"
+doormat_account_name      = "aws_johnny_test"
+base_infra_workspace_name = "aws-sbx-base-infra-JohnnyG"
+tfe_license               = null
