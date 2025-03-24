@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    tfe = {
-      source  = "hashicorp/tfe"
-      version = "~> 0.50"
-    }
-  }
-}
-
 provider "tfe" {
   token = data.external.tfe_token.result["token"]  # Get token dynamically
 }
