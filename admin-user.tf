@@ -4,8 +4,8 @@ provider "tfe" {
 
 data "external" "tfe_token" {
   program = ["sh", "-c", <<EOT
-    TOKEN=$(kubectl exec -it $(kubectl get pods -n tfe -l app=terraform-enterprise -o jsonpath='{.items[0].metadata.name}') -- tfectl admin token)
-    echo "{\"token\": \"${TOKEN}\"}"
+    TOKEN=$(kubectl exec -it $(kubectl get pods -n terraform-enterprise -l app=terraform-enterprise -o jsonpath='{.items[0].metadata.name}') -- tfectl admin token | tr -d '\r')
+    echo '{\"token\": \"'${TOKEN}'\"}'
   EOT
   ]
 }
